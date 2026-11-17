@@ -1,0 +1,9 @@
+{
+  "sources": [
+    "https://www.youtube.com/@TGG",
+    "https://www.youtube.com/@DarkViperAU"
+  ],
+  "download_dir": "downloads",
+  "max_videos_per_source": 1,
+  "proxies": []
+}
