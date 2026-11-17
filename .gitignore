@@ -1,0 +1,38 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Environments
+.env
+.venv/
+env/
+venv/
+ENV/
+
+# Video processing artifacts & downloads
+downloads/
+output/
+clips/
+temp/
+*.mp4
+*.mkv
+*.webm
+*.mov
+*.wav
+*.mp3
+
+# Credentials & secrets
+client_secrets.json
+token.pickle
+token.json
+*.key
+
+# Logs
+*.log
+
+# OS & Editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
