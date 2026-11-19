@@ -307,59 +307,12 @@ def transcribe_audio(
     transcript_json: Path,
     model_size: str = "base.en",
 ) -> List[Dict[str, Any]]:
-    """Transcribe extracted audio using faster-whisper (with speech cue fallback if whisper is unavailable)."""
+    """Transcribe extracted audio using faster-whisper."""
     if WhisperModel is None:
-        logger.warning(
-            "faster-whisper is not installed or has no binary wheels for this Python version. "
-            "Generating speech cues from audio track..."
+        raise RuntimeError(
+            "faster-whisper is not installed. Real word-level transcription requires faster-whisper. "
+            "Install it via: pip install faster-whisper (mock subtitles are strictly prohibited)."
         )
-        # Compute exact audio duration from WAV header
-        import wave
-        with wave.open(str(audio_path.resolve()), "rb") as wf:
-            frames = wf.getnframes()
-            rate = wf.getframerate()
-            duration = frames / float(rate) if rate > 0 else 75.0
-
-        cues = [
-            "Welcome back guys to GTA 6 gameplay in India!",
-            "Look at the graphics and realistic physics right here!",
-            "Bro, this police chase is getting completely insane!",
-            "Did you see that stunt jump over the highway?!",
-            "No way we survived that crash! Look at the damage model!",
-            "Drop a like and subscribe for more daily GTA 6 clips!",
-        ]
-        step = 10.0
-        results: List[Dict[str, Any]] = []
-        curr = 0.0
-        idx = 1
-        while curr < duration:
-            end = min(duration, curr + step)
-            text = cues[(idx - 1) % len(cues)]
-            results.append({
-                "id": idx,
-                "start": round(curr, 2),
-                "end": round(end, 2),
-                "text": text,
-            })
-            curr += step + 0.5
-            idx += 1
-
-        transcript_json.parent.mkdir(parents=True, exist_ok=True)
-        with open(transcript_json, "w", encoding="utf-8") as f:
-            json.dump(
-                {
-                    "duration": duration,
-                    "language": "en",
-                    "segments_count": len(results),
-                    "segments": results,
-                },
-                f,
-                indent=2,
-                ensure_ascii=False,
-            )
-
-        logger.info("Generated %d speech cues from audio track. Saved to %s", len(results), transcript_json.name)
-        return results
 
     logger.info("Initializing faster-whisper model '%s' (CPU, int8)...", model_size)
     model = WhisperModel(model_size, device="cpu", compute_type="int8", cpu_threads=4)
