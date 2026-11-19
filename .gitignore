@@ -15,6 +15,7 @@ downloads/
 output/
 clips/
 temp/
+work/
 *.mp4
 *.mkv
 *.webm
