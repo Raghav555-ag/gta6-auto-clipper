@@ -381,8 +381,8 @@ class SmartFramer:
         # 3. Center foreground over background.
         filter_complex = (
             "[0:v]split=2[bg_src][fg_src];"
-            "[bg_src]scale=1080:1920:force_original_aspect_ratio=increase,"
-            "crop=1080:1920,boxblur=25:5,eq=brightness=-0.08:contrast=0.95[bg];"
+            "[bg_src]scale=270:480:force_original_aspect_ratio=increase,"
+            "crop=270:480,boxblur=10:2,eq=brightness=-0.08:contrast=0.95,scale=1080:1920[bg];"
             "[fg_src]scale=1080:-2[fg];"
             "[bg][fg]overlay=0:(H-h)/2[outv]"
         )
