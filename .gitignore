@@ -22,6 +22,7 @@ work/
 *.mov
 *.wav
 *.mp3
+!assets/**
 
 # Credentials & secrets
 client_secrets.json
